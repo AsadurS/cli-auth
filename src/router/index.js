@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import store from "@/store"
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,14 @@ const routes = [
     path:'/dashboard',
     name: "Dashboard", 
     component: ()=> import('../views/Dashboard/index.vue'),
+    beforeEnter:(to,from,next)=>{
+      if(!store.getters["auth/authenticated"]){
+        return next({
+          name:"Signin"
+        })
+      }
+      next();
+    },
     meta:{
       title: "Dashboard"
     }

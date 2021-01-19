@@ -56,6 +56,12 @@ export default {
         commit('SET_TOKEN', null)
         commit("SET_USER", null)
       }
+    },
+    signout({commit}){
+         return axios.post("api/signout").then(()=>{
+          commit('SET_TOKEN', null)
+          commit("SET_USER", null)
+         });
     }
   },
 }

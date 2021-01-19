@@ -11,6 +11,7 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
+    name: "signIn",
  data(){
      return {
          form:{

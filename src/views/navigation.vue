@@ -6,12 +6,12 @@
           name:'Dashboard'
           }"> Dashboard </router-link>
      | <router-link v-if="(authenticated===null|| authenticated===undefined)" to="/sing-in"> Signin </router-link>
-     | <a v-if="authenticated" href="#"> Sign Out</a>
+     | <a v-if="authenticated" @click="signout" href="#"> Sign Out</a>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'Navagitain',
  computed:{
@@ -19,6 +19,18 @@ export default {
      authenticated : 'auth/authenticated',
      user : 'auth/user',
    })
+ },
+ methods:{
+   ...mapActions({
+     signoutAction:"auth/signout"
+   }),
+signout(){
+  this.signoutAction().then(()=>{
+    this.$router.replace({
+      name:"Signin"
+    })
+  });
+}
  }
 }
 </script>
