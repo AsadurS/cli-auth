@@ -1,18 +1,24 @@
 <template>
   <div class="">
+  <h1 v-if="user">{{user.name}} {{user.email}}</h1>
    <router-link to="/">Home</router-link> |
-      <router-link :to="{
+      <router-link v-if="authenticated" :to="{
           name:'Dashboard'
           }"> Dashboard </router-link>
-     | <router-link to="/sing-in"> Signin </router-link>
-     | <a href="#"> Sign Out</a>
+     | <router-link v-if="(authenticated===null|| authenticated===undefined)" to="/sing-in"> Signin </router-link>
+     | <a v-if="authenticated" href="#"> Sign Out</a>
   </div>
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex';
 export default {
   name: 'Navagitain',
- 
+ computed:{
+   ...mapGetters({
+     authenticated : 'auth/authenticated',
+     user : 'auth/user',
+   })
+ }
 }
 </script>

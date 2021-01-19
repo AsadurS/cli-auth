@@ -15,23 +15,38 @@ export default {
     }
 
   },
+  getters:{
+    authenticated(state)
+    {
+    if( state.token && state.user)
+    {
+       return true
+    }
+    },
+    user(state){
+      return state.user
+    }
+  },
   actions: {
     async signIn({dispatch},credentials)
     {
-        console.log(dispatch)
        await axios.post("api/login",credentials)
        .then(res=>{
-          dispatch('attempt', res.data.token)
+         return dispatch('attempt', res.data.token)
        });
     },
-    async attempt({commit}, token){
-     await commit('SET_TOKEN', token)
+    async attempt({commit, state}, token){
+      if(token)
+      {
+        await commit('SET_TOKEN', token)
+      }
+      if(!state.token)
+      {
+        return ;
+      }
+    
       try{
-        await axios.get("api/me",{
-         headers:{
-          "Authorization": `Bearer  ${token}`
-         } 
-        }).
+        await axios.get("api/me").
         then(res=>{
             commit("SET_USER", res.data)
         }) 

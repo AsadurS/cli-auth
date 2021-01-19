@@ -26,6 +26,11 @@ export default {
       login()
      {
        this.signIn(this.form)
+       .then(()=>{
+           this.$router.replace({
+               name:'Dashboard'
+           })
+       })
      }
  }
 }
