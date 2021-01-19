@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import  axios from "axios"
+import { mapActions } from 'vuex'
 export default {
  data(){
      return {
@@ -20,12 +20,12 @@ export default {
      }
  },
  methods:{
-     async login()
+     ...mapActions({
+         signIn:'auth/signIn'
+     }),
+      login()
      {
-        await axios.post("http://127.0.0.1:8000/api/login", this.form)
-        .then(res=>{
-            console.log(res)
-        });
+       this.signIn(this.form)
      }
  }
 }
